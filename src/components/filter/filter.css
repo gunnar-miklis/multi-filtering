@@ -1,0 +1,56 @@
+.filter {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3rem;
+
+  padding: 3rem;
+  border: 3px solid var(--col-text);
+}
+.filter__sub-filters {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.6rem;
+}
+.filter__sub-filters--active * {
+  font-weight: 600;
+}
+.filter__categories {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.6rem;
+}
+.filter__option {
+  flex: 1 1 10%;
+  white-space: nowrap;
+}
+.filter__option--active {
+  text-transform: uppercase;
+  outline: 2px solid var(--col-text);
+}
+.filter__option--active:hover {
+  outline-width: 0;
+}
+.filter__results {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3rem;
+
+  padding: 3rem;
+  border: 3px solid var(--col-text);
+}
+.filter__list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  gap: 3rem;
+
+  width: 100%;
+}
+.filter__item {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  flex: 0 1 46%;
+
+  border: 1px solid var(--col-text);
+}
