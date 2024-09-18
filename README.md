@@ -1,19 +1,16 @@
-# FILTER COFFEE
+# FILTER COFFEE ☕✨
 
-> \_"Welcome to Filter Coffee, your go-to place for filtering coffee... data. This site offers
+A React-based project that allows users to **multi-filter** a set of data.
 
-          a rich blend of filters that lets you grind through a variety of fictional coffees. Just
-          like tweaking the ultimate brew, it's all about filtering data, pouring over it to reveal
-          the subtle flavours or hidden notes. With Filter Coffee, you can brew your perfect blend
-          of coffee, one filter at a time."_
+This project provides a user-friendly interface for filtering a dataset of coffees based various criteria. The application is built using **React**, **TypeScript**, and **Vite**.
 
-## Overview
+&nbsp;
 
-A React-based project that allows users to filter coffee data based on various criteria.
+![Preview](https://res.cloudinary.com/dyrcsywk9/image/upload/v1726687050/multi-filtering-tablet.webp)
 
-This project provides a user-friendly interface for **multi-filtering** coffee data based on `Roasts`, `Types`, `Flavors`, and `Categories`. The application is built using **React**, **TypeScript**, and **Vite**.
+&nbsp;
 
-## Features
+## 📋 Features
 
 - Filter coffee data by `Roasts`, `Types`, `Flavors`, and `Categories`.
 - Display available filters.
@@ -21,35 +18,51 @@ This project provides a user-friendly interface for **multi-filtering** coffee d
 - Move filters from available to active when clicked and vice versa.
 - Option to clear active filters.
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```bash
+src/
 src/
 ├── App.tsx
 ├── main.tsx
 ├── components
 │   └── filter
-│       ├── ActiveFilters.tsx
-│       ├── AvailableFilters.tsx
 │       ├── Filter.tsx
-│       ├── FilterResults.tsx
+│       ├── FilterPanels
+│       │   ├── ActiveFilters.tsx
+│       │   └── AvailableFilters.tsx
+│       ├── FilterResults
+│       │   └── FilterResults.tsx
 │       └── filter.css
+├── styles
+│   ├── app.css
+│   ├── main.css
+│   ├── reset.css
+│   ├── utils.css
+│   └── variables.css
 ├── data
 │   └── coffee-data.ts
-├── utils
-│   └── functions.ts
-└── styles
-    ├── app.css
-    └── main.css
+└── utils
+    └── functions.ts
 ```
 
-## Dependencies
+## 🛠️ Technologies
 
 - React
 - TypeScript
 - Vite
 
-## Scripts
+## 📦 Installation
+
+- Clone the repository: `git clone https://github.com/gunnar-miklis/multi-filtering.git`.
+- Install dependencies: `yarn` or `npm install`.
+
+## 🖥️ Usage
+
+- Start the development server: `yarn dev` or `npm run dev`.
+- Open the application in your browser: `http://localhost:3000`.
+
+### Scripts
 
 - **dev**: Starts the development server using Vite.
 - **tscw**: Starts the tsc watch mode for development.
@@ -57,13 +70,6 @@ src/
 - **format**: Formats the codebase using Prettier.
 - **build**: Formats, lints and builds the application for production.
 
-## Getting Started
-
-- Clone the repository: git clone `https://github.com/gunnar-miklis/multi-filtering.git`.
-- Install dependencies: `yarn install`.
-- Start the development server: `yarn dev`.
-- Open the application in your browser: `http://localhost:3000`.
-
-## License
+## 📜 License
 
 This project is licensed under the MIT License.

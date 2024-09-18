@@ -1,3 +1,5 @@
+/* TODO: refactor */
+
 .filter {
   display: flex;
   flex-flow: column nowrap;
