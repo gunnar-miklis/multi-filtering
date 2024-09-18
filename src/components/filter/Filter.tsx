@@ -1,7 +1,7 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 
-import AvailableFilters from '@/components/filter/AvailableFilters';
-import ActiveFilters from '@/components/filter/ActiveFilters';
+import AvailableFilters from '@/components/filter/FilterPanels/AvailableFilters';
+import ActiveFilters from '@/components/filter/FilterPanels/ActiveFilters';
 import '@/components/filter/filter.css';
 import { getAllValuesFrom, type Coffee } from '@/data/coffee-data';
 import { getHeadingElement } from '@/utils/functions';
@@ -42,6 +42,12 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
 
   // SECTION: filter the initalCoffees-data: include all the coffees which match the values of activeFilters
   useEffect(() => {
+    // if activeFilters is empty, set filteredCoffees to initalCoffees
+    if (Object.values(activeFilters).every((values) => !values.length)) {
+      setFilteredCoffees(initalCoffees);
+      return;
+    }
+
     const filteredCoffees = initalCoffees.filter((coffee) => {
       const totalMatches = Object.keys(activeFilters).map((filterKey) => {
         const filterValues = activeFilters[filterKey as FilterNames];
@@ -72,11 +78,8 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
       return totalMatches.every((match) => match === true);
     });
 
-    setFilteredCoffees(
-      filteredCoffees.length
-        ? filteredCoffees.toSorted((a, b) => a.name.localeCompare(b.name))
-        : initalCoffees.toSorted((a, b) => a.name.localeCompare(b.name)),
-    );
+    // update filteredCoffees and sort them alphabetically by coffee name
+    setFilteredCoffees(filteredCoffees.toSorted((a, b) => a.name.localeCompare(b.name)));
   }, [initalCoffees, activeFilters, setFilteredCoffees]);
 
   // SECTION: add/remove filters from "available filters" to "active filters" and vice versa.

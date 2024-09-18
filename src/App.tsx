@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import '@/styles/app.css';
 import Filter from '@/components/filter/Filter';
-import FilterResults from '@/components/filter/FilterResults';
+import FilterResults from '@/components/filter/FilterResults/FilterResults';
 
 import { coffees, type Coffee } from '@/data/coffee-data';
 import { getHeadingElement } from '@/utils/functions';
