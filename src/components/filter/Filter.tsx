@@ -1,12 +1,21 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 
-import SubFilter from '@/components/filter/SubFilter';
+import AvailableFilters from '@/components/filter/AvailableFilters';
+import ActiveFilters from '@/components/filter/ActiveFilters';
 import '@/components/filter/filter.css';
 import { getAllValuesFrom, type Coffee } from '@/data/coffee-data';
 import { getHeadingElement } from '@/utils/functions';
-import ActiveFilters from './ActiveFilters';
 
-export type Filters = string[];
+// SECTION: filter related types
+export type FilterNames = 'roasts' | 'types' | 'flavours' | 'categories';
+export type Filters = {
+  [filterName in FilterNames]: string[];
+};
+export type HandleFilteringFunction = (
+  action: 'ADD_FILTER' | 'REMOVE_FILTER' | 'CLEAR_FILTER',
+  filterName: FilterNames | null,
+  filterValue: string | null,
+) => void;
 
 type Props = {
   headingLevel: number;
@@ -15,72 +24,149 @@ type Props = {
 };
 
 export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees }: Props) {
-  const [activeFilters, setActiveFilters] = useState<Filters>([]);
-
-  useEffect(() => {
-    console.log('activeFilters :>> ', activeFilters); // FIXME: here it is not empty!
-    setFilteredCoffees((prev) =>
-      prev.filter((coffee) => {
-        const result = Object.keys(coffee)
-          .map((key) => {
-            if (key === 'roast' || key === 'type' || key === 'flavours' || key === 'categories') {
-              if (typeof coffee[key] === 'string') {
-                console.log('activeFilters :>> ', activeFilters); // FIXME: but here it is empty, wat?
-                console.log('coffee[key] :>> ', coffee[key]);
-                return activeFilters.includes(coffee[key]);
-              }
-              if (Array.isArray(coffee[key])) {
-                return coffee[key].some((item) => activeFilters.includes(item));
-              }
-            } else return false;
-          })
-          .includes(true);
-        return result;
-      }),
-    );
-  }, [activeFilters, setFilteredCoffees]);
-
   const Heading = getHeadingElement(headingLevel);
 
-  const coffeeRoast = getAllValuesFrom(initalCoffees, 'roast');
-  const coffeeType = getAllValuesFrom(initalCoffees, 'type');
-  const coffeeFlavours = getAllValuesFrom(initalCoffees, 'flavours');
-  const coffeeCategories = getAllValuesFrom(initalCoffees, 'categories');
+  // SECTION: inital states
+  const [activeFilters, setActiveFilters] = useState<Filters>({
+    roasts: [],
+    types: [],
+    flavours: [],
+    categories: [],
+  });
+  const [availableFilters, setAvailableFilters] = useState<Filters>({
+    roasts: getAllValuesFrom(initalCoffees, 'roast'),
+    types: getAllValuesFrom(initalCoffees, 'type'),
+    flavours: getAllValuesFrom(initalCoffees, 'flavours'),
+    categories: getAllValuesFrom(initalCoffees, 'categories'),
+  });
+
+  // SECTION: filter the initalCoffees-data: include all the coffees which match the values of activeFilters
+  useEffect(() => {
+    const filteredCoffees = initalCoffees.filter((coffee) => {
+      const totalMatches = Object.keys(activeFilters).map((filterKey) => {
+        const filterValues = activeFilters[filterKey as FilterNames];
+
+        // skip if a value of activeFilter is empty.
+        if (filterValues.length === 0) return true;
+        // else check if the values are matching.
+        else {
+          const valueMatches = Object.keys(coffee).map((coffeeKey) => {
+            const coffeeValues = coffee[coffeeKey as keyof Coffee];
+
+            // type guard: coffeeValues: string | number | string[] | Category[]
+            if (Array.isArray(coffeeValues)) {
+              return coffeeValues.some((value) => filterValues.includes(value));
+            } else if (typeof coffeeValues === 'string') {
+              return filterValues.includes(coffeeValues);
+            } else {
+              return false; // skip: [id: number, name: string, price: number]
+            }
+          });
+
+          // matches (inclusive) for [id, name, roast, type, flavours, categories, price]: boolean[]
+          return valueMatches.some((match) => match === true);
+        }
+      });
+
+      // matches (exclusive) for [roasts, types, flavours, categories]: boolean[]
+      return totalMatches.every((match) => match === true);
+    });
+
+    setFilteredCoffees(
+      filteredCoffees.length
+        ? filteredCoffees.toSorted((a, b) => a.name.localeCompare(b.name))
+        : initalCoffees.toSorted((a, b) => a.name.localeCompare(b.name)),
+    );
+  }, [initalCoffees, activeFilters, setFilteredCoffees]);
+
+  // SECTION: add/remove filters from "available filters" to "active filters" and vice versa.
+  const handleFiltering: HandleFilteringFunction = (
+    action: 'ADD_FILTER' | 'REMOVE_FILTER' | 'CLEAR_FILTER',
+    filterName: FilterNames | null,
+    filterValue: string | null,
+  ) => {
+    switch (action) {
+      case 'ADD_FILTER':
+        {
+          if (!filterName || !filterValue) break;
+
+          // add to active filters
+          setActiveFilters((prev) => ({
+            ...(prev as Filters),
+            [filterName]: [...(prev as Filters)[filterName], filterValue],
+          }));
+
+          // remove from available filters
+          setAvailableFilters((prev) => ({
+            ...(prev as Filters),
+            [filterName]: [
+              ...(prev as Filters)[filterName].filter(
+                (availableFilterValue) => availableFilterValue !== filterValue,
+              ),
+            ],
+          }));
+        }
+        break;
+      case 'REMOVE_FILTER':
+        {
+          if (!filterName || !filterValue) break;
+
+          // remove from active filters
+          setActiveFilters((prev) => ({
+            ...(prev as Filters),
+            [filterName]: [
+              ...(prev as Filters)[filterName].filter(
+                (availableFilterValue) => availableFilterValue !== filterValue,
+              ),
+            ],
+          }));
+
+          // add to available filters + sort value back into intial position
+          setAvailableFilters((prev) => ({
+            ...(prev as Filters),
+            [filterName]: [...(prev as Filters)[filterName], filterValue].toSorted(),
+          }));
+        }
+        break;
+      case 'CLEAR_FILTER':
+        {
+          // reset to inital values
+          setActiveFilters({
+            roasts: [],
+            types: [],
+            flavours: [],
+            categories: [],
+          });
+          setAvailableFilters({
+            roasts: getAllValuesFrom(initalCoffees, 'roast'),
+            types: getAllValuesFrom(initalCoffees, 'type'),
+            flavours: getAllValuesFrom(initalCoffees, 'flavours'),
+            categories: getAllValuesFrom(initalCoffees, 'categories'),
+          });
+        }
+        break;
+      default:
+        return;
+    }
+  };
 
   return (
     <div className='filter'>
-      <Heading>Filters</Heading>
+      <Heading>Filter</Heading>
 
-      <ActiveFilters
-        headingLevel={headingLevel + 1}
-        activeFilters={activeFilters}
-        setActiveFilters={setActiveFilters}
-      />
+      <div className='filter__categories'>
+        <AvailableFilters
+          headingLevel={headingLevel + 1}
+          availableFilters={availableFilters}
+          handleFiltering={handleFiltering}
+        />
 
-      <SubFilter
-        headingTitle='Roast'
-        headingLevel={headingLevel + 1}
-        initalFilters={coffeeRoast}
-        setActiveFilters={setActiveFilters}
-      />
-      <SubFilter
-        headingTitle='Type'
-        headingLevel={headingLevel + 1}
-        initalFilters={coffeeType}
-        setActiveFilters={setActiveFilters}
-      />
-      <SubFilter
-        headingTitle='Flavours'
-        headingLevel={headingLevel + 1}
-        initalFilters={coffeeFlavours}
-        setActiveFilters={setActiveFilters}
-      />
-      <SubFilter
-        headingTitle='Categories'
-        headingLevel={headingLevel + 1}
-        initalFilters={coffeeCategories}
-        setActiveFilters={setActiveFilters}
-      />
+        <ActiveFilters
+          headingLevel={headingLevel + 1}
+          activeFilters={activeFilters}
+          handleFiltering={handleFiltering}
+        />
+      </div>
     </div>
   );
 }

@@ -1,40 +1,43 @@
-import type { Dispatch, SetStateAction } from 'react';
-import type { Filters } from '@/components/filter/Filter';
+import type { FilterNames, Filters, HandleFilteringFunction } from '@/components/filter/Filter';
 import { getHeadingElement } from '@/utils/functions';
 
 type Props = {
   headingLevel: number;
   activeFilters: Filters;
-  setActiveFilters: Dispatch<SetStateAction<Filters>>;
+  handleFiltering: HandleFilteringFunction;
 };
 
-export default function ActiveFilters({ headingLevel, activeFilters, setActiveFilters }: Props) {
-  function removeFilter(clickedFilterItem: string) {
-    // remove from active filters
-    setActiveFilters((prev) => prev.filter((filterItem) => filterItem !== clickedFilterItem));
-
-    // add to local filters
-    // TODO
-  }
-
+export default function ActiveFilters({ headingLevel, activeFilters, handleFiltering }: Props) {
   const Heading = getHeadingElement(headingLevel);
 
-  if (!activeFilters.length) return null;
+  // if empty don't display this component
+  if (Object.values(activeFilters).every((values) => !values.length)) return null;
   return (
-    <div className='filter__sub-filters filter__sub-filters--active'>
+    <div className='filter__category filter__category--active'>
       <Heading>Active Filters</Heading>
 
-      <div className='filter__categories'>
-        {activeFilters.map((filter) => (
-          <button
-            className='filter__option filter__option--active'
-            onClick={() => removeFilter(filter)}
-            key={filter}
-          >
-            {filter}
-          </button>
-        ))}
+      {/* display active filters in just one single block, rather than splitted in several categories*/}
+      <div className='filter__options'>
+        {Object.entries(activeFilters).map(([filterName, filterValues]) =>
+          filterValues.map((value) => (
+            <button
+              key={value}
+              className='filter__option filter__option--active'
+              onClick={() => handleFiltering('REMOVE_FILTER', filterName as FilterNames, value)}
+            >
+              {value}
+            </button>
+          )),
+        )}
       </div>
+
+      {/* reset button */}
+      <button
+        className='filter__option filter__option--active'
+        onClick={() => handleFiltering('CLEAR_FILTER', null, null)}
+      >
+        Reset
+      </button>
     </div>
   );
 }

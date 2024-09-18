@@ -1,15 +1,22 @@
 import type { Coffee } from '@/data/coffee-data';
-import { getHeadingElement } from '@/utils/functions';
+import { capitalizeFirstLetter, getHeadingElement } from '@/utils/functions';
 
-type Props = { headingLevel: number; filteredCoffees: Coffee[] };
+type Props = {
+  headingLevel: number;
+  totalCoffees: number;
+  filteredCoffees: Coffee[];
+};
 
-export default function FilterResults({ headingLevel, filteredCoffees }: Props) {
+export default function FilterResults({ headingLevel, totalCoffees, filteredCoffees }: Props) {
   const Heading = getHeadingElement(headingLevel);
   const SubHeading = getHeadingElement(headingLevel + 1);
 
   return (
     <div className='filter__results'>
-      <Heading>Filter Results</Heading>
+      <Heading>
+        Coffees: {filteredCoffees.length}/{totalCoffees}
+      </Heading>
+
       <div className='filter__list'>
         {filteredCoffees.map(({ name, roast, type, flavours, categories, price }) => (
           <div className='filter__item' key={name}>
@@ -21,10 +28,10 @@ export default function FilterResults({ headingLevel, filteredCoffees }: Props) 
 
             <div className='box'>
               <p>{flavours.join(', ')}</p>
-
               <small>{categories.join(', ')}</small>
-              <small>{roast[0].toUpperCase() + roast.slice(1)} Roast</small>
+              <small>{capitalizeFirstLetter(roast)} Roast</small>
             </div>
+
             <div className='box'>
               <strong>{price} €</strong>
             </div>

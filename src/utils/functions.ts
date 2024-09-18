@@ -14,3 +14,13 @@ export function getHeadingElement(level: number) {
     throw new Error('Heading Level must be between 1-6');
   }
 }
+
+/**
+ * Returns a new string with the first character uppercased.
+ *
+ * @param {string} str - The string to capitalize.
+ * @returns {string} The capitalized string.
+ */
+export function capitalizeFirstLetter(st: string) {
+  return st.charAt(0).toUpperCase() + st.slice(1);
+}

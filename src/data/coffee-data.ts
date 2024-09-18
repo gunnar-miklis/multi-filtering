@@ -1,4 +1,4 @@
-type Category = 'Blend' | 'Single Origin' | 'Decaf' | 'Speciality' | 'Fair Trade';
+export type Category = 'Blend' | 'Single Origin' | 'Decaf' | 'Speciality' | 'Fair Trade';
 export type Coffee = {
   id: number;
   name: string;
@@ -10,15 +10,6 @@ export type Coffee = {
 };
 
 export const coffees: Coffee[] = [
-  {
-    id: 1,
-    name: 'Morning Bliss',
-    roast: 'light',
-    type: 'Filter',
-    flavours: ['Citrus', 'Floral', 'Honey'],
-    categories: ['Single Origin', 'Speciality'],
-    price: 8.99,
-  },
   {
     id: 2,
     name: 'Dark Velvet',
@@ -51,7 +42,7 @@ export const coffees: Coffee[] = [
     name: 'Sunrise Brew',
     roast: 'light',
     type: 'Cappuccino',
-    flavours: ['Berry', 'Citrus', 'Floral'],
+    flavours: ['Citrus', 'Floral'],
     categories: ['Single Origin', 'Speciality'],
     price: 8.29,
   },
@@ -101,33 +92,6 @@ export const coffees: Coffee[] = [
     price: 8.59,
   },
   {
-    id: 11,
-    name: 'Caramel Harmony',
-    roast: 'medium',
-    type: 'Cappuccino',
-    flavours: ['Caramel', 'Apple', 'Brown Sugar'],
-    categories: ['Single Origin', 'Fair Trade'],
-    price: 7.49,
-  },
-  {
-    id: 12,
-    name: 'Smooth Decaf',
-    roast: 'medium',
-    type: 'Americano',
-    flavours: ['Chocolate', 'Nutty', 'Smooth'],
-    categories: ['Decaf', 'Fair Trade'],
-    price: 6.99,
-  },
-  {
-    id: 13,
-    name: 'Espresso Delight',
-    roast: 'medium',
-    type: 'Espresso',
-    flavours: ['Blueberry', 'Wine', 'Spice'],
-    categories: ['Single Origin', 'Speciality'],
-    price: 9.99,
-  },
-  {
     id: 14,
     name: 'Latte Love',
     roast: 'light',
@@ -141,9 +105,108 @@ export const coffees: Coffee[] = [
     name: 'Fair Trade Favourite',
     roast: 'dark',
     type: 'Filter',
-    flavours: ['Cocoa', 'Dried Fruit', 'Almond'],
+    flavours: ['Dried Fruit', 'Almond'],
     categories: ['Fair Trade', 'Blend'],
     price: 7.89,
+  },
+  {
+    id: 16,
+    name: 'Mystic Mocha',
+    roast: 'medium',
+    type: 'Cappuccino',
+    flavours: ['Mocha', 'Cinnamon', 'Cream'],
+    categories: ['Blend', 'Speciality'],
+    price: 10.49,
+  },
+  {
+    id: 17,
+    name: 'Ginger Spice Latte',
+    roast: 'light',
+    type: 'Latte',
+    flavours: ['Ginger', 'Spice', 'Vanilla'],
+    categories: ['Single Origin', 'Speciality'],
+    price: 11.99,
+  },
+  {
+    id: 19,
+    name: 'Velvet Smooth',
+    roast: 'medium',
+    type: 'Flat White',
+    flavours: ['Velvet', 'Berry', 'Nutmeg'],
+    categories: ['Single Origin', 'Speciality'],
+    price: 12.79,
+  },
+  {
+    id: 22,
+    name: 'Espresso Elegance',
+    roast: 'dark',
+    type: 'Espresso',
+    flavours: ['Smoky', 'Cherry', 'Spice'],
+    categories: ['Blend', 'Fair Trade'],
+    price: 11.79,
+  },
+  {
+    id: 23,
+    name: 'Morning Joy',
+    roast: 'light',
+    type: 'Filter',
+    flavours: ['Peach', 'Citrus', 'Honey'],
+    categories: ['Single Origin', 'Speciality'],
+    price: 7.99,
+  },
+  {
+    id: 25,
+    name: 'Autumn Spice',
+    roast: 'dark',
+    type: 'Americano',
+    flavours: ['Pumpkin', 'Spice', 'Maple'],
+    categories: ['Blend', 'Speciality'],
+    price: 9.99,
+  },
+  {
+    id: 26,
+    name: 'Sweet Harmony',
+    roast: 'light',
+    type: 'Flat White',
+    flavours: ['Honey', 'Vanilla', 'Almond'],
+    categories: ['Single Origin', 'Speciality'],
+    price: 11.29,
+  },
+  {
+    id: 27,
+    name: 'Hazelnut Heaven',
+    roast: 'medium',
+    type: 'Espresso',
+    flavours: ['Hazelnut', 'Chocolate', 'Coffee'],
+    categories: ['Blend', 'Fair Trade'],
+    price: 10.99,
+  },
+  {
+    id: 28,
+    name: 'Frosty Brew',
+    roast: 'medium',
+    type: 'Filter',
+    flavours: ['Mint', 'Chocolate', 'Caramel'],
+    categories: ['Single Origin', 'Speciality'],
+    price: 8.99,
+  },
+  {
+    id: 31,
+    name: 'Spiced Citrus',
+    roast: 'medium',
+    type: 'Americano',
+    flavours: ['Spice', 'Nutty', 'Citrus'],
+    categories: ['Decaf', 'Fair Trade'],
+    price: 7.49,
+  },
+  {
+    id: 32,
+    name: 'Creamy Caramel',
+    roast: 'light',
+    type: 'Latte',
+    flavours: ['Caramel', 'Cream', 'Vanilla'],
+    categories: ['Blend', 'Speciality'],
+    price: 14.29,
   },
 ];
 
@@ -158,11 +221,11 @@ export const coffees: Coffee[] = [
  *
  * @example
  * const coffees = [
- *     {id: 1, name: 'Coffee 1', categories: ['Fair Trade', 'Speciality']},
- *     {id: 2, name: 'Coffee 2', categories: ['Single Origin', 'Speciality']},
+ *     {id: 1, name: 'Coffee 1', categories: ['Fair Trade', 'Speciality'], ...},
+ *     {id: 2, name: 'Coffee 2', categories: ['Speciality', 'Blend'], ...},
+ *     ...
  * ];
- * const categories = getAllValuesFrom(coffees, 'categories');
- * // categories will be ['Fair Trade', 'Speciality', 'Single Origin',]
+ * const categories = getAllValuesFrom(coffees, 'categories'); // => ['Blend', 'Fair Trade', 'Speciality']: Categories[]
  */
 export function getAllValuesFrom<DataType, KeyType extends keyof DataType>(
   data: DataType[],

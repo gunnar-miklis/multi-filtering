@@ -6,22 +6,29 @@
   padding: 3rem;
   border: 3px solid var(--col-text);
 }
-.filter__sub-filters {
+.filter__categories {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 3rem;
+}
+.filter__category {
   display: flex;
   flex-flow: column nowrap;
   gap: 0.6rem;
 }
-.filter__sub-filters--active * {
+.filter__category--active * {
   font-weight: 600;
 }
-.filter__categories {
+.filter__options {
   display: flex;
   flex-flow: row wrap;
   gap: 0.6rem;
 }
 .filter__option {
   flex: 1 1 10%;
+
   white-space: nowrap;
+  font-size: 0.9rem;
 }
 .filter__option--active {
   text-transform: uppercase;
@@ -50,7 +57,24 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
-  flex: 0 1 46%;
+  flex: 1 1;
+  flex-basis: 42%;
 
   border: 1px solid var(--col-text);
+}
+
+@media screen and (max-width: 600px) {
+  .filter__item {
+    flex-basis: 100%;
+  }
+}
+@media screen and (min-width: 1300px) {
+  .filter__item {
+    flex-basis: 25%;
+  }
+}
+@media screen and (min-width: 1700px) {
+  .filter__item {
+    flex-basis: 20%;
+  }
 }

@@ -12,7 +12,6 @@
   display: flex;
   flex-flow: column nowrap;
 
-  max-width: 1000px;
   margin: -6px;
   border: 3px solid var(--col-text);
 }
@@ -25,6 +24,14 @@
   padding: 3rem;
   border: 3px solid var(--col-text);
 }
+.app__description {
+  font-size: 1.1rem;
+  max-width: 1280px;
+}
+.app__main {
+  display: flex;
+  flex-flow: column nowrap;
+}
 
 .box {
   display: flex;
@@ -34,4 +41,10 @@
   height: 100%;
   border: 1px solid var(--col-text);
   padding: 0.3rem;
+}
+
+@media screen and (min-width: 1000px) {
+  .app__main {
+    flex-flow: row nowrap;
+  }
 }

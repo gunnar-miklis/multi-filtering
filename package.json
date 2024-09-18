@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "tscw": "tsc --watch",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "build": "prettier --write . && eslint . && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
