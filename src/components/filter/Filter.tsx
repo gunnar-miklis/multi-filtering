@@ -49,33 +49,29 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
     }
 
     const filteredCoffees = initalCoffees.filter((coffee) => {
-      const totalMatches = Object.keys(activeFilters).map((filterKey) => {
-        const filterValues = activeFilters[filterKey as FilterNames];
-
-        // skip if a value of activeFilter is empty.
+      // check if a single coffee matches ALL (every) active filters [roasts, types, flavours, categories]
+      return Object.values(activeFilters).every((filterValues) => {
+        // if there are no filterValues, ignore/skip this coffee.
         if (filterValues.length === 0) return true;
-        // else check if the values are matching.
-        else {
-          const valueMatches = Object.keys(coffee).map((coffeeKey) => {
-            const coffeeValues = coffee[coffeeKey as keyof Coffee];
 
-            // type guard: coffeeValues: string | number | string[] | Category[]
-            if (Array.isArray(coffeeValues)) {
-              return coffeeValues.some((value) => filterValues.includes(value));
-            } else if (typeof coffeeValues === 'string') {
-              return filterValues.includes(coffeeValues);
-            } else {
-              return false; // skip: [id: number, name: string, price: number]
-            }
-          });
+        // check if the filterValues match ANY (some) of the coffeeValue [id, name, roast, type, flavours, categories, price]
+        return Object.entries(coffee).some(([coffeeKey, coffeeValue]) => {
+          // ignore/skip these coffeeValues: [id, name, price]
+          if (!['roast', 'type', 'flavours', 'categories'].includes(coffeeKey)) {
+            return false;
+          }
 
-          // matches (inclusive) for [id, name, roast, type, flavours, categories, price]: boolean[]
-          return valueMatches.some((match) => match === true);
-        }
+          // type guard: string (roast, type)
+          if (typeof coffeeValue === 'string') {
+            return filterValues.includes(coffeeValue);
+          }
+
+          // type guard: array (flavours, categories)
+          if (Array.isArray(coffeeValue)) {
+            return coffeeValue.some((value) => filterValues.includes(value));
+          }
+        });
       });
-
-      // matches (exclusive) for [roasts, types, flavours, categories]: boolean[]
-      return totalMatches.every((match) => match === true);
     });
 
     // update filteredCoffees and sort them alphabetically by coffee name
