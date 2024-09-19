@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import '@/styles/app.css';
+import '@/app.css';
 import Filter from '@/components/filter/Filter';
 import FilterResults from '@/components/filter/FilterResults/FilterResults';
 
