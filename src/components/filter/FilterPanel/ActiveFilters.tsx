@@ -1,14 +1,20 @@
-import type { FilterNames, Filters, HandleFilteringFunction } from '@/components/filter/Filter';
+import type { FilterNames, Filters } from '@/components/filter/Filter';
 import '@/components/filter/FilterPanel/filter-panel.css';
 import { getHeadingElement } from '@/utils/functions';
 
 type Props = {
   headingLevel: number;
   activeFilters: Filters;
-  handleFiltering: HandleFilteringFunction;
+  removeFromActiveFilters: (filterName: FilterNames, filterValue: string) => void;
+  resetActiveFilters: () => void;
 };
 
-export default function ActiveFilters({ headingLevel, activeFilters, handleFiltering }: Props) {
+export default function ActiveFilters({
+  headingLevel,
+  activeFilters,
+  removeFromActiveFilters,
+  resetActiveFilters,
+}: Props) {
   const Heading = getHeadingElement(headingLevel);
 
   // if empty don't display this component
@@ -24,7 +30,7 @@ export default function ActiveFilters({ headingLevel, activeFilters, handleFilte
             <button
               key={value}
               className='button filter-panel__option filter-panel__option--active'
-              onClick={() => handleFiltering('REMOVE_FILTER', filterName as FilterNames, value)}
+              onClick={() => removeFromActiveFilters(filterName as FilterNames, value)}
             >
               {value}
             </button>
@@ -35,7 +41,7 @@ export default function ActiveFilters({ headingLevel, activeFilters, handleFilte
       {/* reset button */}
       <button
         className='button filter-panel__option filter-panel__option--active'
-        onClick={() => handleFiltering('CLEAR_FILTER', null, null)}
+        onClick={resetActiveFilters}
       >
         Reset
       </button>

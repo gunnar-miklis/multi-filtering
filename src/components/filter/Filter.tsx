@@ -11,11 +11,6 @@ export type FilterNames = 'roasts' | 'types' | 'flavours' | 'categories';
 export type Filters = {
   [filterName in FilterNames]: string[];
 };
-export type HandleFilteringFunction = (
-  action: 'ADD_FILTER' | 'REMOVE_FILTER' | 'CLEAR_FILTER',
-  filterName: FilterNames | null,
-  filterValue: string | null,
-) => void;
 
 type Props = {
   headingLevel: number;
@@ -26,7 +21,6 @@ type Props = {
 export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees }: Props) {
   const Heading = getHeadingElement(headingLevel);
 
-  // SECTION: inital states
   const [activeFilters, setActiveFilters] = useState<Filters>({
     roasts: [],
     types: [],
@@ -78,76 +72,57 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
     setFilteredCoffees(filteredCoffees.toSorted((a, b) => a.name.localeCompare(b.name)));
   }, [initalCoffees, activeFilters, setFilteredCoffees]);
 
-  // SECTION: add/remove filters from "available filters" to "active filters" and vice versa.
-  const handleFiltering: HandleFilteringFunction = (
-    action: 'ADD_FILTER' | 'REMOVE_FILTER' | 'CLEAR_FILTER',
-    filterName: FilterNames | null,
-    filterValue: string | null,
-  ) => {
-    switch (action) {
-      case 'ADD_FILTER':
-        {
-          if (!filterName || !filterValue) break;
+  // SECTION: add/remove/clear active filters
+  function addToActiveFilters(filterName: FilterNames, filterValue: string) {
+    // add to active filters
+    setActiveFilters((prev) => ({
+      ...(prev as Filters),
+      [filterName]: [...(prev as Filters)[filterName], filterValue],
+    }));
 
-          // add to active filters
-          setActiveFilters((prev) => ({
-            ...(prev as Filters),
-            [filterName]: [...(prev as Filters)[filterName], filterValue],
-          }));
+    // remove from available filters
+    setAvailableFilters((prev) => ({
+      ...(prev as Filters),
+      [filterName]: [
+        ...(prev as Filters)[filterName].filter(
+          (availableFilterValue) => availableFilterValue !== filterValue,
+        ),
+      ],
+    }));
+  }
 
-          // remove from available filters
-          setAvailableFilters((prev) => ({
-            ...(prev as Filters),
-            [filterName]: [
-              ...(prev as Filters)[filterName].filter(
-                (availableFilterValue) => availableFilterValue !== filterValue,
-              ),
-            ],
-          }));
-        }
-        break;
-      case 'REMOVE_FILTER':
-        {
-          if (!filterName || !filterValue) break;
+  function removeFromActiveFilters(filterName: FilterNames, filterValue: string) {
+    // remove from active filters
+    setActiveFilters((prev) => ({
+      ...(prev as Filters),
+      [filterName]: [
+        ...(prev as Filters)[filterName].filter(
+          (availableFilterValue) => availableFilterValue !== filterValue,
+        ),
+      ],
+    }));
 
-          // remove from active filters
-          setActiveFilters((prev) => ({
-            ...(prev as Filters),
-            [filterName]: [
-              ...(prev as Filters)[filterName].filter(
-                (availableFilterValue) => availableFilterValue !== filterValue,
-              ),
-            ],
-          }));
+    // add to available filters + sort value back into intial position
+    setAvailableFilters((prev) => ({
+      ...(prev as Filters),
+      [filterName]: [...(prev as Filters)[filterName], filterValue].toSorted(),
+    }));
+  }
 
-          // add to available filters + sort value back into intial position
-          setAvailableFilters((prev) => ({
-            ...(prev as Filters),
-            [filterName]: [...(prev as Filters)[filterName], filterValue].toSorted(),
-          }));
-        }
-        break;
-      case 'CLEAR_FILTER':
-        {
-          // reset to inital values
-          setActiveFilters({
-            roasts: [],
-            types: [],
-            flavours: [],
-            categories: [],
-          });
-          setAvailableFilters({
-            roasts: getAllValuesFrom(initalCoffees, 'roast'),
-            types: getAllValuesFrom(initalCoffees, 'type'),
-            flavours: getAllValuesFrom(initalCoffees, 'flavours'),
-            categories: getAllValuesFrom(initalCoffees, 'categories'),
-          });
-        }
-        break;
-      default:
-        return;
-    }
-  };
+  function resetActiveFilters() {
+    setActiveFilters({
+      roasts: [],
+      types: [],
+      flavours: [],
+      categories: [],
+    });
+    setAvailableFilters({
+      roasts: getAllValuesFrom(initalCoffees, 'roast'),
+      types: getAllValuesFrom(initalCoffees, 'type'),
+      flavours: getAllValuesFrom(initalCoffees, 'flavours'),
+      categories: getAllValuesFrom(initalCoffees, 'categories'),
+    });
+  }
 
   return (
     <div className='flexCol flexNoWrap gap-lg box box--bold-border filter'>
@@ -157,13 +132,14 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
         <AvailableFilters
           headingLevel={headingLevel + 1}
           availableFilters={availableFilters}
-          handleFiltering={handleFiltering}
+          addToActiveFilters={addToActiveFilters}
         />
 
         <ActiveFilters
           headingLevel={headingLevel + 1}
           activeFilters={activeFilters}
-          handleFiltering={handleFiltering}
+          removeFromActiveFilters={removeFromActiveFilters}
+          resetActiveFilters={resetActiveFilters}
         />
       </div>
     </div>

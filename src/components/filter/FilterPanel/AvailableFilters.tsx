@@ -1,17 +1,17 @@
-import type { FilterNames, Filters, HandleFilteringFunction } from '@/components/filter/Filter';
+import type { FilterNames, Filters } from '@/components/filter/Filter';
 import '@/components/filter/FilterPanel/filter-panel.css';
 import { capitalizeFirstLetter, getHeadingElement } from '@/utils/functions';
 
 type Props = {
   headingLevel: number;
   availableFilters: Filters;
-  handleFiltering: HandleFilteringFunction;
+  addToActiveFilters: (filterName: FilterNames, filterValue: string) => void;
 };
 
 export default function AvailableFilters({
   headingLevel,
   availableFilters,
-  handleFiltering,
+  addToActiveFilters,
 }: Props) {
   const Heading = getHeadingElement(headingLevel);
 
@@ -29,7 +29,7 @@ export default function AvailableFilters({
               <button
                 key={value}
                 className='button filter-panel__option'
-                onClick={() => handleFiltering('ADD_FILTER', filterName as FilterNames, value)}
+                onClick={() => addToActiveFilters(filterName as FilterNames, value)}
               >
                 {value}
               </button>
