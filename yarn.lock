@@ -441,7 +441,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint/js@npm:9.10.0, @eslint/js@npm:^9.9.0":
+"@eslint/js@npm:9.10.0, @eslint/js@npm:^9.10.0":
   version: 9.10.0
   resolution: "@eslint/js@npm:9.10.0"
   checksum: 10c0/2ac45a002dc1ccf25be46ea61001ada8d77248d1313ab4e53f3735e5ae00738a757874e41f62ad6fbd49df7dffeece66e5f53ff0d7b78a99ce4c68e8fea66753
@@ -773,7 +773,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.3.3":
+"@types/react@npm:*, @types/react@npm:^18.3.7":
   version: 18.3.7
   resolution: "@types/react@npm:18.3.7"
   dependencies:
@@ -1413,7 +1413,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^5.1.0-rc.0":
+"eslint-plugin-react-hooks@npm:^5.1.0-rc-fb9a90fa48-20240614":
   version: 5.1.0-rc-fb9a90fa48-20240614
   resolution: "eslint-plugin-react-hooks@npm:5.1.0-rc-fb9a90fa48-20240614"
   peerDependencies:
@@ -1422,7 +1422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-refresh@npm:^0.4.9":
+"eslint-plugin-react-refresh@npm:^0.4.12":
   version: 0.4.12
   resolution: "eslint-plugin-react-refresh@npm:0.4.12"
   peerDependencies:
@@ -1455,7 +1455,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^9.9.0":
+"eslint@npm:^9.10.0":
   version: 9.10.0
   resolution: "eslint@npm:9.10.0"
   dependencies:
@@ -2362,22 +2362,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "multi-filtering@workspace:."
   dependencies:
-    "@eslint/js": "npm:^9.9.0"
+    "@eslint/js": "npm:^9.10.0"
     "@types/gh-pages": "npm:^6.1.0"
-    "@types/react": "npm:^18.3.3"
+    "@types/react": "npm:^18.3.7"
     "@types/react-dom": "npm:^18.3.0"
     "@vitejs/plugin-react": "npm:^4.3.1"
-    eslint: "npm:^9.9.0"
-    eslint-plugin-react-hooks: "npm:^5.1.0-rc.0"
-    eslint-plugin-react-refresh: "npm:^0.4.9"
+    eslint: "npm:^9.10.0"
+    eslint-plugin-react-hooks: "npm:^5.1.0-rc-fb9a90fa48-20240614"
+    eslint-plugin-react-refresh: "npm:^0.4.12"
     gh-pages: "npm:^6.1.1"
     globals: "npm:^15.9.0"
     prettier: "npm:^3.3.3"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    typescript: "npm:^5.5.3"
-    typescript-eslint: "npm:^8.0.1"
-    vite: "npm:^5.4.1"
+    typescript: "npm:^5.6.2"
+    typescript-eslint: "npm:^8.6.0"
+    vite: "npm:^5.4.6"
   languageName: unknown
   linkType: soft
 
@@ -3042,7 +3042,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-eslint@npm:^8.0.1":
+"typescript-eslint@npm:^8.6.0":
   version: 8.6.0
   resolution: "typescript-eslint@npm:8.6.0"
   dependencies:
@@ -3056,7 +3056,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.5.3":
+"typescript@npm:^5.6.2":
   version: 5.6.2
   resolution: "typescript@npm:5.6.2"
   bin:
@@ -3066,7 +3066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.5.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.6.2#optional!builtin<compat/typescript>":
   version: 5.6.2
   resolution: "typescript@patch:typescript@npm%3A5.6.2#optional!builtin<compat/typescript>::version=5.6.2&hash=8c6c40"
   bin:
@@ -3124,7 +3124,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.4.1":
+"vite@npm:^5.4.6":
   version: 5.4.6
   resolution: "vite@npm:5.4.6"
   dependencies:
