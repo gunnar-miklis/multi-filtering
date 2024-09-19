@@ -12,7 +12,7 @@ coverage
 logs
 *.log
 *.local
-tsconfig.tsbuildinfo
+*.tsbuildinfo
 
 # add exceptions to the configuration files that belong to the project.
 !.gitignore
