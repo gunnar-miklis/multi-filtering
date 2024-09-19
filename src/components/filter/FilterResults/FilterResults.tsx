@@ -1,3 +1,4 @@
+import '@/components/filter/FilterResults/filter-results.css';
 import type { Coffee } from '@/data/coffee-data';
 import { capitalizeFirstLetter, getHeadingElement } from '@/utils/functions';
 
@@ -12,28 +13,28 @@ export default function FilterResults({ headingLevel, totalCoffees, filteredCoff
   const SubHeading = getHeadingElement(headingLevel + 1);
 
   return (
-    <div className='filter__results'>
-      <Heading>
+    <div className='flexCol flexNoWrap gap-lg box box--bold-border filter-results'>
+      <Heading className={`heading-${headingLevel}`}>
         Coffees: {filteredCoffees.length}/{totalCoffees}
       </Heading>
 
-      <div className='filter__list'>
+      <div className='flexRow flexWrap gap-lg filter-results__list'>
         {filteredCoffees.map(({ name, roast, type, flavours, categories, price }) => (
-          <div className='filter__item' key={name}>
-            <div className='box'>
-              <SubHeading>
+          <div className='flexCol flexNoWrap box filter-results__item' key={name}>
+            <div className='box box--full-height'>
+              <SubHeading className={`heading-${headingLevel + 1}`}>
                 {name}, {type}
               </SubHeading>
             </div>
 
-            <div className='box'>
-              <p>{flavours.join(', ')}</p>
-              <small>{categories.join(', ')}</small>
-              <small>{capitalizeFirstLetter(roast)} Roast</small>
+            <div className='box box--full-height'>
+              <p className='text'>{flavours.join(', ')}</p>
+              <small className='small'>{categories.join(', ')}</small>
+              <small className='small'>{capitalizeFirstLetter(roast)} Roast</small>
             </div>
 
-            <div className='box'>
-              <strong>{price} €</strong>
+            <div className='box box--full-height'>
+              <strong className='strong'>{price} €</strong>
             </div>
           </div>
         ))}

@@ -1,0 +1,29 @@
+.filter-results {
+  padding: var(--space-lg);
+}
+.filter-results__list {
+  justify-content: space-between;
+
+  width: 100%;
+}
+.filter-results__item {
+  justify-content: space-between;
+  flex: 1 1;
+  flex-basis: 42%;
+}
+
+@media screen and (max-width: 600px) {
+  .filter-results__item {
+    flex-basis: 100%;
+  }
+}
+@media screen and (min-width: 1300px) {
+  .filter-results__item {
+    flex-basis: 25%;
+  }
+}
+@media screen and (min-width: 1700px) {
+  .filter-results__item {
+    flex-basis: 20%;
+  }
+}

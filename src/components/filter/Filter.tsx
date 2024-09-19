@@ -1,7 +1,7 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 
-import AvailableFilters from '@/components/filter/FilterPanels/AvailableFilters';
-import ActiveFilters from '@/components/filter/FilterPanels/ActiveFilters';
+import AvailableFilters from '@/components/filter/FilterPanel/AvailableFilters';
+import ActiveFilters from '@/components/filter/FilterPanel/ActiveFilters';
 import '@/components/filter/filter.css';
 import { getAllValuesFrom, type Coffee } from '@/data/coffee-data';
 import { getHeadingElement } from '@/utils/functions';
@@ -154,10 +154,10 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
   };
 
   return (
-    <div className='filter'>
-      <Heading>Filter</Heading>
+    <div className='flexCol flexNoWrap gap-lg box box--bold-border filter'>
+      <Heading className={`heading-${headingLevel}`}>Filter</Heading>
 
-      <div className='filter__categories'>
+      <div className='flexCol flexNoWrap gap-lg filter-panel'>
         <AvailableFilters
           headingLevel={headingLevel + 1}
           availableFilters={availableFilters}

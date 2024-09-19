@@ -1,4 +1,5 @@
 import type { FilterNames, Filters, HandleFilteringFunction } from '@/components/filter/Filter';
+import '@/components/filter/FilterPanel/filter-panel.css';
 import { getHeadingElement } from '@/utils/functions';
 
 type Props = {
@@ -13,16 +14,16 @@ export default function ActiveFilters({ headingLevel, activeFilters, handleFilte
   // if empty don't display this component
   if (Object.values(activeFilters).every((values) => !values.length)) return null;
   return (
-    <div className='filter__category filter__category--active'>
-      <Heading>Active Filters</Heading>
+    <div className='flexCol flexNoWrap gap-sm filter__category filter-panel__category--active'>
+      <Heading className={`heading-${headingLevel}`}>Active Filters</Heading>
 
       {/* display active filters in just one single block, rather than splitted in several categories*/}
-      <div className='filter__options'>
+      <div className='flexRow flexWrap gap-sm filter-panel__options'>
         {Object.entries(activeFilters).map(([filterName, filterValues]) =>
           filterValues.map((value) => (
             <button
               key={value}
-              className='filter__option filter__option--active'
+              className='button filter-panel__option filter-panel__option--active'
               onClick={() => handleFiltering('REMOVE_FILTER', filterName as FilterNames, value)}
             >
               {value}
@@ -33,7 +34,7 @@ export default function ActiveFilters({ headingLevel, activeFilters, handleFilte
 
       {/* reset button */}
       <button
-        className='filter__option filter__option--active'
+        className='button filter-panel__option filter-panel__option--active'
         onClick={() => handleFiltering('CLEAR_FILTER', null, null)}
       >
         Reset

@@ -14,11 +14,11 @@ function App() {
   const Heading = getHeadingElement(initalHeadingLevel);
 
   return (
-    <div className='app'>
-      <div className='app__header'>
-        <Heading>Filter Coffee</Heading>
+    <div className='flexRow flexNoWrap box box--bold-border app'>
+      <div className='flexCol flexNoWrap gap-md box box--bold-border app__header'>
+        <Heading className={`heading-${initalHeadingLevel}`}>Filter Coffee</Heading>
 
-        <p className='app__description'>
+        <p className='text app__description'>
           Welcome to Filter Coffee, your go-to place for filtering coffee... data. This site offers
           a rich blend of filters that lets you grind through a variety of fictional coffees. Just
           like tweaking the ultimate brew, it's all about filtering data, pouring over it to reveal
@@ -27,7 +27,7 @@ function App() {
         </p>
       </div>
 
-      <div className='app__main'>
+      <div className='flexCol flexNoWrap app__main'>
         <Filter
           headingLevel={initalHeadingLevel + 1}
           initalCoffees={coffees}

@@ -1,0 +1,16 @@
+.filter-panel__category--active * {
+  font-weight: 600;
+}
+.filter-panel__option {
+  flex: 1 1 10%;
+
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+.filter-panel__option--active {
+  text-transform: uppercase;
+  outline: 2px solid var(--col-text);
+}
+.filter-panel__option--active:hover {
+  outline-width: 0;
+}
