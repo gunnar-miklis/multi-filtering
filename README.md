@@ -22,20 +22,21 @@ This project provides a user-friendly interface for filtering a dataset of coffe
 
 ```bash
 src/
-src/
-├── App.tsx
 ├── main.tsx
+├── App.tsx
+├── app.css
 ├── components
 │   └── filter
 │       ├── Filter.tsx
-│       ├── FilterPanels
+│       ├── filter.css
+│       ├── FilterPanel
 │       │   ├── ActiveFilters.tsx
-│       │   └── AvailableFilters.tsx
-│       ├── FilterResults
-│       │   └── FilterResults.tsx
-│       └── filter.css
+│       │   ├── AvailableFilters.tsx
+│       │   └── filter-panel.css
+│       └── FilterResults
+│           ├── FilterResults.tsx
+│           └── filter-results.css
 ├── styles
-│   ├── app.css
 │   ├── main.css
 │   ├── reset.css
 │   ├── utils.css
