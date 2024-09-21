@@ -5,6 +5,7 @@ import ActiveFilters from '@/components/filter/FilterPanel/ActiveFilters';
 import '@/components/filter/filter.css';
 import { getAllValuesFrom, type Coffee } from '@/data/coffee-data';
 import { getHeadingElement } from '@/utils/functions';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // SECTION: filter related types
 export type FilterNames = 'roasts' | 'types' | 'flavours' | 'categories';
@@ -20,6 +21,8 @@ type Props = {
 
 export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees }: Props) {
   const Heading = getHeadingElement(headingLevel);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [activeFilters, setActiveFilters] = useState<Filters>({
     roasts: [],
@@ -71,6 +74,59 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
     // update filteredCoffees and sort them alphabetically by coffee name
     setFilteredCoffees(filteredCoffees.toSorted((a, b) => a.name.localeCompare(b.name)));
   }, [initalCoffees, activeFilters, setFilteredCoffees]);
+
+  // FIXME: get url search params and set active filters
+  useEffect(() => {
+    // get search params from url path (?flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
+    const searchParams = location.search.replace(/^\?/, '');
+    console.log('searchParams :>> ', searchParams);
+
+    // split filter name and values (flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
+    const splittedSearchParams = searchParams.split('&').map((param) => param.split('='));
+    console.log('splittedSearchParams :>> ', splittedSearchParams);
+
+    // connect filter names and values (flavours => Berry,Cinnamon,Vanilla )
+    const filtersFromSearchParams: Filters = {
+      roasts: [],
+      types: [],
+      flavours: [],
+      categories: [],
+    };
+    splittedSearchParams.forEach(([key, value]) => {
+      // check they have the correct key
+      if (['roasts', 'types', 'flavours', 'categories'].includes(key)) {
+        // make sure there are no duplicates
+        const splittedValues = value.replace(/%20/, '').split(',');
+        const uniqueValues = [...new Set(splittedValues)];
+        filtersFromSearchParams[key as FilterNames] = uniqueValues;
+      }
+    });
+    console.log('filtersFromSearchParams :>> ', filtersFromSearchParams);
+    setActiveFilters(filtersFromSearchParams);
+  }, [location]);
+
+  // FIXME: set url from (selected) active filters
+  useEffect(() => {
+    // connect selected values for each filter name (flavours => Berry,Cinnamon,Vanilla)
+    const selectedFilters = new Map();
+    Object.entries(activeFilters).forEach(([filterName, filterValues]) => {
+      if (filterValues.length) {
+        selectedFilters.set(filterName, filterValues.join(','));
+      }
+    });
+    if (selectedFilters.size === 0) return;
+
+    // connect filter name and values (flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
+    const searchParams = Array.from(selectedFilters, ([key, value]) => key + '=' + value).join('&');
+
+    // connect base path with filters (/multi-filtering?flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
+    const href = `${location.pathname}?${searchParams}`;
+
+    navigate(href, {
+      replace: true,
+      preventScrollReset: true,
+    });
+  }, [activeFilters, location, navigate]);
 
   // SECTION: add/remove/clear active filters
   function addToActiveFilters(filterName: FilterNames, filterValue: string) {
