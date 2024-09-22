@@ -1,11 +1,11 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import AvailableFilters from '@/components/filter/FilterPanel/AvailableFilters';
 import ActiveFilters from '@/components/filter/FilterPanel/ActiveFilters';
 import '@/components/filter/filter.css';
 import { getAllValuesFrom, type Coffee } from '@/data/coffee-data';
 import { getHeadingElement } from '@/utils/functions';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 // SECTION: filter related types
 export type FilterNames = 'roasts' | 'types' | 'flavours' | 'categories';
@@ -22,7 +22,7 @@ type Props = {
 export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees }: Props) {
   const Heading = getHeadingElement(headingLevel);
   const navigate = useNavigate();
-  const location = useLocation();
+  const { pathname, search } = useLocation();
 
   const [activeFilters, setActiveFilters] = useState<Filters>({
     roasts: [],
@@ -75,35 +75,30 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
     setFilteredCoffees(filteredCoffees.toSorted((a, b) => a.name.localeCompare(b.name)));
   }, [initalCoffees, activeFilters, setFilteredCoffees]);
 
-  // FIXME: get url search params and set active filters
+  // SECTION: convert search params to activeFilters
   useEffect(() => {
-    // get search params from url path (?flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
-    const searchParams = location.search.replace(/^\?/, '');
-    console.log('searchParams :>> ', searchParams);
+    // get search params from url (e.g. flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
+    const searchParams = new URLSearchParams(search);
+    if (searchParams.size === 0) return;
 
-    // split filter name and values (flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
-    const splittedSearchParams = searchParams.split('&').map((param) => param.split('='));
-    console.log('splittedSearchParams :>> ', splittedSearchParams);
+    // convert search params to object {flavours: ['Berry', 'Cinnamon', 'Vanilla'], categories: ['Speciality', 'Single Origin']}
+    const convertedSearchParams = Object.fromEntries(
+      searchParams.entries().map(([key, value]) => [key, value.split(',')]),
+    );
 
-    // connect filter names and values (flavours => Berry,Cinnamon,Vanilla )
-    const filtersFromSearchParams: Filters = {
-      roasts: [],
-      types: [],
-      flavours: [],
-      categories: [],
-    };
-    splittedSearchParams.forEach(([key, value]) => {
-      // check they have the correct key
-      if (['roasts', 'types', 'flavours', 'categories'].includes(key)) {
-        // make sure there are no duplicates
-        const splittedValues = value.replace(/%20/, '').split(',');
-        const uniqueValues = [...new Set(splittedValues)];
-        filtersFromSearchParams[key as FilterNames] = uniqueValues;
-      }
-    });
-    console.log('filtersFromSearchParams :>> ', filtersFromSearchParams);
-    setActiveFilters(filtersFromSearchParams);
-  }, [location]);
+    // loop activeFilters:
+    // if the filterName (type FilterNames) matches the one from convertedSearchParams, set the values.
+    // else set empty array.
+    setActiveFilters(
+      (prev) =>
+        Object.fromEntries(
+          Object.keys(prev).map((filterName) => [
+            filterName as FilterNames,
+            convertedSearchParams[filterName as FilterNames] || [],
+          ]),
+        ) as Filters,
+    );
+  }, [search]);
 
   // FIXME: set url from (selected) active filters
   useEffect(() => {
@@ -120,13 +115,13 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
     const searchParams = Array.from(selectedFilters, ([key, value]) => key + '=' + value).join('&');
 
     // connect base path with filters (/multi-filtering?flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
-    const href = `${location.pathname}?${searchParams}`;
+    const href = `${pathname}?${searchParams}`;
 
     navigate(href, {
       replace: true,
       preventScrollReset: true,
     });
-  }, [activeFilters, location, navigate]);
+  }, [activeFilters, pathname, navigate]);
 
   // SECTION: add/remove/clear active filters
   function addToActiveFilters(filterName: FilterNames, filterValue: string) {
@@ -178,6 +173,7 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
       flavours: getAllValuesFrom(initalCoffees, 'flavours'),
       categories: getAllValuesFrom(initalCoffees, 'categories'),
     });
+    navigate(pathname, { replace: true, preventScrollReset: true });
   }
 
   return (
