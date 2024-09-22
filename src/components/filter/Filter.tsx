@@ -7,11 +7,8 @@ import '@/components/filter/filter.css';
 import { getAllValuesFrom, type Coffee } from '@/data/coffee-data';
 import { getHeadingElement } from '@/utils/functions';
 
-// SECTION: filter related types
 export type FilterNames = 'roasts' | 'types' | 'flavours' | 'categories';
-export type Filters = {
-  [filterName in FilterNames]: string[];
-};
+export type Filters = { [filterName in FilterNames]: string[] };
 
 type Props = {
   headingLevel: number;
@@ -75,10 +72,12 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
     setFilteredCoffees(filteredCoffees.toSorted((a, b) => a.name.localeCompare(b.name)));
   }, [initalCoffees, activeFilters, setFilteredCoffees]);
 
-  // SECTION: convert search params to activeFilters
+  // SECTION: get url search params from url and update activeFilters accordingly
   useEffect(() => {
     // get search params from url (e.g. flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
     const searchParams = new URLSearchParams(search);
+
+    // if there's no filter passed via url, return
     if (searchParams.size === 0) return;
 
     // convert search params to object {flavours: ['Berry', 'Cinnamon', 'Vanilla'], categories: ['Speciality', 'Single Origin']}
@@ -100,23 +99,25 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
     );
   }, [search]);
 
-  // FIXME: set url from (selected) active filters
+  // SECTION: set url search params from activeFilters
   useEffect(() => {
-    // connect selected values for each filter name (flavours => Berry,Cinnamon,Vanilla)
-    const selectedFilters = new Map();
+    const searchParams = new URLSearchParams();
+
+    // loop over activeFilters:
+    // if filters are selected, append a key-value pair to searchParams
     Object.entries(activeFilters).forEach(([filterName, filterValues]) => {
       if (filterValues.length) {
-        selectedFilters.set(filterName, filterValues.join(','));
+        searchParams.append(filterName, filterValues.join(','));
       }
     });
-    if (selectedFilters.size === 0) return;
 
-    // connect filter name and values (flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
-    const searchParams = Array.from(selectedFilters, ([key, value]) => key + '=' + value).join('&');
+    // if there's no filter set, return
+    if (searchParams.size === 0) return;
 
-    // connect base path with filters (/multi-filtering?flavours=Berry,Cinnamon,Vanilla&categories=Speciality,Single Origin)
+    // connect base url with searchParams
     const href = `${pathname}?${searchParams}`;
 
+    // update the browser url
     navigate(href, {
       replace: true,
       preventScrollReset: true,
