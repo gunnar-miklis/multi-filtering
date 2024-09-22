@@ -13,10 +13,11 @@ This project provides a user-friendly interface for filtering a dataset of coffe
 ## 📋 Features
 
 - Filter coffee data by `Roasts`, `Types`, `Flavors`, and `Categories`.
-- Display available filters.
-- Display active filters.
-- Move filters from available to active when clicked and vice versa.
-- Option to clear active filters.
+- Display "available" and "active" filters.
+- On selecting filters, filters move from "available" to "active" and vice versa.
+- Filters are represented and updated in the browser URL as well.
+- Filters can be set by entering a specific URL.
+- Option to clear "active" filters (including clear URL).
 
 ## 🗂️ Project Structure
 
