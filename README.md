@@ -1,8 +1,8 @@
 # FILTER COFFEE ☕✨
 
-A React-based project that allows users to **multi-filter** a set of data.
+This small interface allows users to **multi-filter** a dataset of Ai-generated fictional coffees, based various criteria. The application is built using **React**, **TypeScript**, and **Vite**.
 
-This project provides a user-friendly interface for filtering a dataset of coffees based various criteria. The application is built using **React**, **TypeScript**, and **Vite**.
+It's part of my practice projects. Get familiar with advance filtering mechanism, handle multiple filters effectively, update the URL. Enhance my knowledge in React (state management), TypeScript (create and handle more complex types) and CSS (learn and follow BEM methodology for cleaner and reusable css).
 
 &nbsp;
 
@@ -12,12 +12,12 @@ This project provides a user-friendly interface for filtering a dataset of coffe
 
 ## 📋 Features
 
-- Filter coffee data by `Roasts`, `Types`, `Flavors`, and `Categories`.
+- Dynamically filter a dataset by different categories.
 - Display "available" and "active" filters.
-- On selecting filters, filters move from "available" to "active" and vice versa.
-- Filters are represented and updated in the browser URL as well.
-- Filters can be set by entering a specific URL.
-- Option to clear "active" filters (including clear URL).
+- Move filters from "available" to "active" when clicked, and vice versa.
+- Selected Filters are represented and updated in the browser URL as well.
+- Filters in the App can be set by entering/pasting a specific URL, too.
+- Option to clear and reset "active" filters (including clear URL).
 
 ## 🗂️ Project Structure
 
