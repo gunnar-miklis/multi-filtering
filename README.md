@@ -1,8 +1,8 @@
 # FILTER COFFEE ☕✨
 
-This small interface allows users to **multi-filter** a dataset of Ai-generated fictional coffees, based various criteria. The application is built using **React**, **TypeScript**, and **Vite**.
+This small interface allows users to **multi-filter** a dataset of Ai-generated fictional coffees, based various criteria.
 
-It's part of my practice projects. Get familiar with advance filtering mechanism, handle multiple filters effectively, update the URL. Enhance my knowledge in React (state management), TypeScript (create and handle more complex types) and CSS (learn and follow BEM methodology for cleaner and reusable css).
+It's part of my practice projects. Get familiar with advance filtering mechanism, handle multiple filters effectively, update the URL (search params). Enhance my knowledge in React (state management), TypeScript (create and handle more complex types) and CSS (learn and follow BEM methodology for cleaner and reusable css).
 
 &nbsp;
 
