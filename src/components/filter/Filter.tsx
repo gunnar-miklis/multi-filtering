@@ -188,7 +188,7 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
           removeFromActiveFilters={removeFromActiveFilters}
           resetActiveFilters={resetActiveFilters}
         />
-        
+
         <AvailableFilters
           headingLevel={headingLevel + 1}
           availableFilters={availableFilters}
