@@ -182,17 +182,17 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
       <Heading className={`heading-${headingLevel}`}>Filter</Heading>
 
       <div className='flexCol flexNoWrap gap-lg filter-panel'>
-        <AvailableFilters
-          headingLevel={headingLevel + 1}
-          availableFilters={availableFilters}
-          addToActiveFilters={addToActiveFilters}
-        />
-
         <ActiveFilters
           headingLevel={headingLevel + 1}
           activeFilters={activeFilters}
           removeFromActiveFilters={removeFromActiveFilters}
           resetActiveFilters={resetActiveFilters}
+        />
+        
+        <AvailableFilters
+          headingLevel={headingLevel + 1}
+          availableFilters={availableFilters}
+          addToActiveFilters={addToActiveFilters}
         />
       </div>
     </div>
