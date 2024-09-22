@@ -19,11 +19,11 @@ function App() {
         <Heading className={`heading-${initalHeadingLevel}`}>Filter Coffee</Heading>
 
         <p className='text app__description'>
-          Welcome to Filter Coffee, your go-to place for filtering coffee... data. This site offers
-          a rich blend of filters that lets you grind through a variety of fictional coffees. Just
-          like tweaking the ultimate brew, it's all about filtering data, pouring over it to reveal
-          the subtle flavours or hidden notes. With Filter Coffee, you can brew your perfect blend
-          of coffee, one filter at a time.
+          Welcome to Filter Coffee, your go-to place for filtering coffee... data. This tiny
+          application offers a rich blend of filters that lets you grind through a variety of
+          Ai-generated fictional coffees. Just like tweaking the ultimate brew, it's all about
+          filtering data, pouring over it to reveal the subtle flavours or hidden notes. With Filter
+          Coffee, you can brew your perfect blend of coffee, one filter at a time.
         </p>
       </div>
 
