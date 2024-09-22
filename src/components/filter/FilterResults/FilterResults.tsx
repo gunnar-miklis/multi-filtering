@@ -21,19 +21,21 @@ export default function FilterResults({ headingLevel, totalCoffees, filteredCoff
       <div className='flexRow flexWrap gap-lg filter-results__list'>
         {filteredCoffees.map(({ name, roast, type, flavours, categories, price }) => (
           <div className='flexCol flexNoWrap box filter-results__item' key={name}>
-            <div className='box box--full-height'>
-              <SubHeading className={`heading-${headingLevel + 1}`}>
+            <div className='box box--full-height filter-results__heading'>
+              <SubHeading
+                className={`heading-${headingLevel + 1} heading-3--no-margin heading-3--normal-line-height`}
+              >
                 {name}, {type}
               </SubHeading>
             </div>
 
-            <div className='box box--full-height'>
+            <div className='box box--full-height filter-results__body'>
               <p className='text'>{flavours.join(', ')}</p>
               <small className='small'>{categories.join(', ')}</small>
               <small className='small'>{capitalizeFirstLetter(roast)} Roast</small>
             </div>
 
-            <div className='box box--full-height'>
+            <div className='box box--full-height filter-results__price'>
               <strong className='strong'>{price} €</strong>
             </div>
           </div>
