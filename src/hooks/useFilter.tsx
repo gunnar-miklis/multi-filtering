@@ -19,7 +19,7 @@ export default function useFilter(
     flavours: [],
     categories: [],
   });
-  
+
   const [availableFilters, setAvailableFilters] = useState<Filters>({
     roasts: getAllValuesFrom(initalCoffees, 'roast'),
     types: getAllValuesFrom(initalCoffees, 'type'),
@@ -27,14 +27,16 @@ export default function useFilter(
     categories: getAllValuesFrom(initalCoffees, 'categories'),
   });
 
-  // SECTION: filter the initalCoffees-data: include all the coffees which match the values of activeFilters
+  // SECTION: main filter logic
   useEffect(() => {
-    // if activeFilters is empty, set filteredCoffees to initalCoffees
+    // SUB-SECTION #1: if activeFilters is empty, set filteredCoffees to initalCoffees
     if (Object.values(activeFilters).every((values) => !values.length)) {
       setFilteredCoffees(initalCoffees);
       return;
     }
 
+    // SUB-SECTION #2: filter the initalCoffees-data
+    // include all the coffees which match the values of activeFilters
     const filteredCoffees = initalCoffees.filter((coffee) => {
       // check if a single coffee matches ALL (every) active filters [roasts, types, flavours, categories]
       return Object.values(activeFilters).every((filterValues) => {
@@ -63,6 +65,28 @@ export default function useFilter(
 
     // update filteredCoffees and sort them alphabetically by coffee name
     setFilteredCoffees(filteredCoffees.toSorted((a, b) => a.name.localeCompare(b.name)));
+
+    // SUB-SECTION #3: narrow down the remaining filter options
+    // show ONLY those filters that the user can still choose from, instead of showing ALL options.
+    const remainingAvailableFilters = {
+      roasts: getAllValuesFrom(filteredCoffees, 'roast'),
+      types: getAllValuesFrom(filteredCoffees, 'type'),
+      flavours: getAllValuesFrom(filteredCoffees, 'flavours'),
+      categories: getAllValuesFrom(filteredCoffees, 'categories'),
+    };
+
+    // exlude activeFilters from remainingAvailableFilters
+    const narrowedAvailableFilters = Object.fromEntries(
+      Object.entries(remainingAvailableFilters).map(([filterName, values]) => {
+        const filteredValues = values.filter(
+          (value) => !activeFilters[filterName as FilterNames].includes(value),
+        );
+        return [filterName, filteredValues];
+      }),
+    ) as Filters;
+
+    // update availableFilters
+    setAvailableFilters(narrowedAvailableFilters);
   }, [initalCoffees, activeFilters, setFilteredCoffees]);
 
   // SECTION: get url search params from url and update activeFilters accordingly
@@ -119,25 +143,13 @@ export default function useFilter(
 
   // SECTION: add/remove/clear active filters
   function addToActiveFilters(filterName: FilterNames, filterValue: string) {
-    // add to active filters
     setActiveFilters((prev) => ({
       ...(prev as Filters),
       [filterName]: [...(prev as Filters)[filterName], filterValue],
     }));
-
-    // remove from available filters
-    setAvailableFilters((prev) => ({
-      ...(prev as Filters),
-      [filterName]: [
-        ...(prev as Filters)[filterName].filter(
-          (availableFilterValue) => availableFilterValue !== filterValue,
-        ),
-      ],
-    }));
   }
 
   function removeFromActiveFilters(filterName: FilterNames, filterValue: string) {
-    // remove from active filters
     setActiveFilters((prev) => ({
       ...(prev as Filters),
       [filterName]: [
@@ -145,12 +157,6 @@ export default function useFilter(
           (availableFilterValue) => availableFilterValue !== filterValue,
         ),
       ],
-    }));
-
-    // add to available filters + sort value back into intial position
-    setAvailableFilters((prev) => ({
-      ...(prev as Filters),
-      [filterName]: [...(prev as Filters)[filterName], filterValue].toSorted(),
     }));
   }
 
@@ -161,7 +167,6 @@ export default function useFilter(
       flavours: [],
       categories: [],
     });
-
     setAvailableFilters({
       roasts: getAllValuesFrom(initalCoffees, 'roast'),
       types: getAllValuesFrom(initalCoffees, 'type'),

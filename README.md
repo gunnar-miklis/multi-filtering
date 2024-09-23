@@ -1,8 +1,8 @@
 # FILTER COFFEE ☕✨
 
-This small interface allows users to **multi-filter** a dataset of Ai-generated fictional coffees, based various criteria.
+This small application lets users filter a dataset of fictional (AI-generated) coffees based on various criteria.
 
-It's part of my practice projects. Get familiar with advance filtering mechanism, handle multiple filters effectively, update the URL (search params). Enhance my knowledge in React (state management), TypeScript (create and handle more complex types) and CSS (learn and follow BEM methodology for cleaner and reusable css).
+It's part of my practice projects. The main goals are: Get familiar with advance filtering techniques, handle multiple filters effectively, update the URL (search params). Enhance my knowledge in React (state management, custom hooks), TypeScript (handle more complex types) and CSS (learn and follow BEM methodology for clean and reusable styles).
 
 &nbsp;
 
@@ -12,12 +12,12 @@ It's part of my practice projects. Get familiar with advance filtering mechanism
 
 ## 📋 Features
 
-- Dynamically filter a dataset by different categories.
-- Display "available" and "active" filters.
-- Move filters from "available" to "active" when clicked, and vice versa.
-- Selected Filters are represented and updated in the browser URL as well.
-- Filters in the App can be set by entering/pasting a specific URL, too.
-- Option to clear and reset "active" filters (including clear URL).
+- **Dynamically Multiple filtering**: Use multiple filters to filter a dataset by different categories.
+- **Filter Status Managment**: See which filters are "available" and which are currently "active".
+- **Interactive Filter Selection**: Click to move filters between "available" and "active" lists.
+- **Adaptive Remaining Filters**: Available filters show only those options that the user can still choose from.
+- **URL Sync**: Active filters are reflected in the browser URL. Simply share the current filter combination, or paste a URL to revisit a specific set of filters.
+- **Reset Filters**: Clear all active filters and reset the URL to start over.
 
 ## 🗂️ Project Structure
 
@@ -36,15 +36,17 @@ src/
 │       └── FilterResults
 │           ├── FilterResults.tsx
 │           └── filter-results.css
-├── styles
-│   ├── main.css
-│   ├── reset.css
-│   ├── utils.css
-│   └── variables.css
+├── hooks
+│   └── useFilter.tsx
 ├── data
 │   └── coffee-data.ts
-└── utils
-    └── functions.ts
+├── utils
+│   └── functions.ts
+└── styles
+    ├── main.css
+    ├── reset.css
+    ├── utils.css
+    └── variables.css
 ```
 
 ## 🛠️ Technologies
