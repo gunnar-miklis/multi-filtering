@@ -1,4 +1,4 @@
-import type { FilterNames, Filters } from '@/components/filter/FilterPanel/FilterPanel';
+import type { FilterNames, Filters } from '@/types/index';
 import '@/components/filter/FilterPanel/filter-panel.css';
 import { getHeadingElement } from '@/utils/functions';
 
