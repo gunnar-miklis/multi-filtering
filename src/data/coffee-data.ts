@@ -75,7 +75,7 @@ export const coffees: Coffee[] = [
   },
   {
     id: 9,
-    name: 'Espresso Noir',
+    name: 'Espresso Elegance',
     roast: 'dark',
     type: 'Espresso',
     flavours: ['Dark Chocolate', 'Cinnamon'],
@@ -138,10 +138,10 @@ export const coffees: Coffee[] = [
   },
   {
     id: 22,
-    name: 'Espresso Elegance',
+    name: 'Espresso Noir',
     roast: 'dark',
     type: 'Espresso',
-    flavours: ['Smoky', 'Cherry', 'Spice'],
+    flavours: ['Smoky', 'Cherry'],
     categories: ['Blend'],
     price: 11.79,
   },
@@ -209,31 +209,3 @@ export const coffees: Coffee[] = [
     price: 14.29,
   },
 ];
-
-/**
- * Returns a sorted array of unique values for a given property in the given data array.
- * The values will be flattened if they are arrays and duplicates are removed.
- * The type of the values will be inferred from the type of the property.
- *
- * @param data - The data array to extract values from.
- * @param property - The property name to extract values from.
- * @returns A sorted array of unique values for the given property.
- *
- * @example
- * const coffees = [
- *     {id: 1, name: 'Coffee 1', categories: ['Fair Trade', 'Speciality'], ...},
- *     {id: 2, name: 'Coffee 2', categories: ['Speciality', 'Blend'], ...},
- *     ...
- * ];
- * const categories = getAllValuesFrom(coffees, 'categories'); // => ['Blend', 'Fair Trade', 'Speciality']: Categories[]
- */
-export function getAllValuesFrom<DataType, KeyType extends keyof DataType>(
-  data: DataType[],
-  property: KeyType,
-) {
-  const allValues = data.map((item) => item[property]);
-  const flattenedValues = allValues.flat();
-  const uniqueValues = Array.from(new Set(flattenedValues));
-  const sortedValues = [...uniqueValues].sort();
-  return sortedValues;
-}

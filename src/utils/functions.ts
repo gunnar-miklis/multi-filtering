@@ -24,3 +24,31 @@ export function getHeadingElement(level: number) {
 export function capitalizeFirstLetter(st: string) {
   return st.charAt(0).toUpperCase() + st.slice(1);
 }
+
+/**
+ * Returns a sorted array of unique values for a given property in the given data array.
+ * The values will be flattened if they are arrays and duplicates are removed.
+ * The type of the values will be inferred from the type of the property.
+ *
+ * @param data - The data array to extract values from.
+ * @param property - The property name to extract values from.
+ * @returns A sorted array of unique values for the given property.
+ *
+ * @example
+ * const coffees = [
+ *     {id: 1, name: 'Coffee 1', categories: ['Fair Trade', 'Speciality'], ...},
+ *     {id: 2, name: 'Coffee 2', categories: ['Speciality', 'Blend'], ...},
+ *     ...
+ * ];
+ * const categories = getAllValuesFrom(coffees, 'categories'); // => ['Blend', 'Fair Trade', 'Speciality']: Category[]
+ */
+export function getAllValuesFrom<DataType, KeyType extends keyof DataType>(
+  data: DataType[],
+  property: KeyType,
+) {
+  const allValues = data.map((item) => item[property]);
+  const flattenedValues = allValues.flat();
+  const uniqueValues = Array.from(new Set(flattenedValues));
+  const sortedValues = [...uniqueValues].sort();
+  return sortedValues;
+}

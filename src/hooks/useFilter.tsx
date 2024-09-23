@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import type { Dispatch, SetStateAction } from 'react';
 import type { Coffee } from '@/data/coffee-data';
 import type { FilterNames, Filters } from '@/types';
-import { getAllValuesFrom } from '@/data/coffee-data';
+import { getAllValuesFrom } from '@/utils/functions';
 
 export default function useFilter(
   initalCoffees: Coffee[],
@@ -75,7 +75,7 @@ export default function useFilter(
       categories: getAllValuesFrom(filteredCoffees, 'categories'),
     };
 
-    // exlude activeFilters from remainingAvailableFilters
+    // exclude activeFilters from remainingAvailableFilters
     const narrowedAvailableFilters = Object.fromEntries(
       Object.entries(remainingAvailableFilters).map(([filterName, values]) => {
         const filteredValues = values.filter(
