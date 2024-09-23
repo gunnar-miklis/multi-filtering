@@ -13,7 +13,7 @@
 }
 .filter-panel__option--active {
   text-transform: uppercase;
-  outline: 2px solid var(--col-text);
+  outline: 2px solid var(--col-border);
 }
 .filter-panel__option--active:hover {
   outline-width: 0;

@@ -12,8 +12,8 @@
 }
 
 html {
-  color: light-dark(var(--col-text), var(--col-bg));
-  background-color: light-dark(var(--col-bg), var(--col-text));
+  color: var(--col-text);
+  background-color: var(--col-bg);
 
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 16px;
@@ -59,22 +59,16 @@ body {
 }
 
 .button {
-  border: 1px solid var(--col-text);
+  border: 1px solid var(--col-border);
   padding: var(--space-sm) var(--space-md);
 
   background-color: transparent;
-  font-size: inherit;
-  font-weight: inherit;
-  font-family: inherit;
 
   cursor: pointer;
 }
-.button:hover {
-  outline: 2px solid var(--col-text);
-}
 .button:focus,
-.button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.button:hover {
+  outline: 2px solid var(--col-border);
 }
 
 .box {
@@ -82,7 +76,7 @@ body {
   flex-flow: column nowrap;
 
   width: 100%;
-  border: 1px solid var(--col-text);
+  border: 1px solid var(--col-border);
 }
 .box--bold-border {
   border-width: 3px;
