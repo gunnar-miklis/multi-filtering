@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import '@/app.css';
-import Filter from '@/components/filter/Filter';
+import FilterPanel from '@/components/filter/FilterPanel/FilterPanel';
 import FilterResults from '@/components/filter/FilterResults/FilterResults';
 
 import { coffees, type Coffee } from '@/data/coffee-data';
@@ -28,7 +28,7 @@ function App() {
       </div>
 
       <div className='flexCol flexNoWrap app__main'>
-        <Filter
+        <FilterPanel
           headingLevel={initalHeadingLevel + 1}
           initalCoffees={coffees}
           setFilteredCoffees={setFilteredCoffees}

@@ -1,3 +1,7 @@
+.filter-panel {
+  padding: var(--space-lg);
+}
+
 .filter-panel__category--active * {
   font-weight: 600;
 }

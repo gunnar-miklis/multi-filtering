@@ -28,11 +28,10 @@ src/
 ├── app.css
 ├── components
 │   └── filter
-│       ├── Filter.tsx
-│       ├── filter.css
 │       ├── FilterPanel
 │       │   ├── ActiveFilters.tsx
 │       │   ├── AvailableFilters.tsx
+│       │   ├── FilterPanel.tsx
 │       │   └── filter-panel.css
 │       └── FilterResults
 │           ├── FilterResults.tsx

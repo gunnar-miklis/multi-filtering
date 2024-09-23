@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import AvailableFilters from '@/components/filter/FilterPanel/AvailableFilters';
 import ActiveFilters from '@/components/filter/FilterPanel/ActiveFilters';
-import '@/components/filter/filter.css';
+import '@/components/filter/FilterPanel/filter-panel.css';
 import { getAllValuesFrom, type Coffee } from '@/data/coffee-data';
 import { getHeadingElement } from '@/utils/functions';
 
@@ -18,6 +18,7 @@ type Props = {
 
 export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees }: Props) {
   const Heading = getHeadingElement(headingLevel);
+  
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
 
@@ -178,10 +179,10 @@ export default function Filter({ headingLevel, initalCoffees, setFilteredCoffees
   }
 
   return (
-    <div className='flexCol flexNoWrap gap-lg box box--bold-border filter'>
+    <div className='flexCol flexNoWrap gap-lg box box--bold-border filter-panel'>
       <Heading className={`heading-${headingLevel}`}>Filter</Heading>
 
-      <div className='flexCol flexNoWrap gap-lg filter-panel'>
+      <div className='flexCol flexNoWrap gap-lg'>
         <ActiveFilters
           headingLevel={headingLevel + 1}
           activeFilters={activeFilters}
