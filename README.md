@@ -2,7 +2,12 @@
 
 This small application lets users filter a dataset of fictional (AI-generated) coffees based on various criteria.
 
-It's part of my practice projects. The main goals are: Get familiar with advance filtering techniques, handle multiple filters effectively, update the URL (search params). Enhance my knowledge in React (state management, custom hooks), TypeScript (handle more complex types) and CSS (learn and follow BEM methodology for clean and reusable styles).
+It's part of my practice projects. The main learning goals are:
+
+- Get familiar with advance filtering techniques, handle multiple filters effectively and update the URL (search params).
+- React: Enhance my knowledge (complex state management, custom hooks, separation of concerns).
+- TypeScript: Handle more complex types.
+- CSS conventions: Learn and follow BEM methodology for clean and reusable styles.
 
 &nbsp;
 
@@ -12,7 +17,7 @@ It's part of my practice projects. The main goals are: Get familiar with advance
 
 ## 📋 Features
 
-- **Dynamically Multiple filtering**: Use multiple filters to filter a dataset by different categories.
+- **Dynamically Multiple Filtering**: Use multiple filters to filter a dataset by different categories.
 - **Filter Status Managment**: See which filters are "available" and which are currently "active".
 - **Interactive Filter Selection**: Click to move filters between "available" and "active" lists.
 - **Adaptive Remaining Filters**: Available filters show only those options that the user can still choose from.
@@ -42,6 +47,8 @@ src/
 │   └── coffee-data.ts
 ├── utils
 │   └── functions.ts
+├── types
+│   └── index.ts
 └── styles
     ├── main.css
     ├── reset.css
