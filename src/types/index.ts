@@ -1,5 +1,8 @@
-export type FilterNames = 'roasts' | 'types' | 'flavours' | 'categories';
-
 export type Filters = {
-  [filterName in FilterNames]: string[];
+  roasts: string[];
+  types: string[];
+  flavours: string[];
+  categories: string[];
 };
+
+export type FilterNames = keyof Filters;
