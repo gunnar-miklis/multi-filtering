@@ -5,7 +5,7 @@ This small application lets users filter a dataset of fictional (AI-generated) c
 It's part of my practice projects. The main learning goals are:
 
 - Get familiar with advance filtering techniques, handle multiple filters effectively and update the URL (search params).
-- React: Enhance my knowledge (complex state management, custom hooks, separation of concerns).
+- React: Enhance my knowledge (complex state management, custom hooks, separation of concerns, MVVM).
 - TypeScript: Handle more complex types.
 - CSS conventions: Learn and follow BEM methodology for clean and reusable styles.
 
